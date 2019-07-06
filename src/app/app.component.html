@@ -1,21 +1,115 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container">
 
-<router-outlet></router-outlet>
+  <app-header></app-header>
+
+  <div class="col-master-section">
+    <h6>Column Master</h6>
+
+    <button type="button" class="btn btn-primary" (click)="openModal(template)">
+      <span class="sprite addIcon"></span> Add Column</button>
+    &nbsp;
+    <button type="button" class="btn btn-danger" [disabled]="!selectedIds.length" (click)="deleteColumn()">
+      <span class="sprite deleteIcon"></span> Delete Column
+    </button>
+
+    <div class="card">
+      <div class="card-header">Column Master</div>
+      <div class="card-body">
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="checkAll" name="selectAll" (click)="selectAll($event)"></th>
+              <th>Column Name</th>
+              <th>Column Type</th>
+              <th>Editable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let column of columnData">
+              <td><input type="checkbox" (click)="selectColumnIds(column.id,$event)" value="{{column.id}}"
+                  class="chkbx"></td>
+              <td>{{column.columnName | uppercase}}</td>
+              <td>{{column.columnType | titlecase}}</td>
+              <td>{{column.editable | titlecase}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <h6>Result Datagrid</h6>
+    <div class="card">
+      <div class="card-header">Result Datagrid</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <th *ngFor="let column of columnData">
+                {{column.columnName | uppercase}}
+              </th>
+            </tr>
+            <tr>
+              <td *ngFor="let column of columnData">
+                <input type="{{column.columnType}}" [disabled]="column.editable == 'no'">
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h6 class="modal-title pull-left">Add Column</h6>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="addColumn(fr)" #fr="ngForm">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Column Name</label>
+          <div class="mx-sm-3 mb-2">
+            <input type="text" class="form-control" name="columnName" placeholder="Enter Column Name" ngModel columnName
+              #columnName="ngModel" required>
+            <span class="errorMsg" *ngIf="!columnName.valid && columnName.touched">Enter column name</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Column Type</label>
+          <div class="mx-sm-3 mb-2">
+            <select ngModel class="form-control" name="columnType" columnType #columnType="ngModel" required>
+              <option value="">Select Type</option>
+              <option value="string">String</option>
+              <option value="number">Number</option>
+              <option value="date">Date</option>
+              <option value="boolean">Boolean</option>
+            </select>
+            <span class="errorMsg" *ngIf="!columnType.valid && columnType.touched">Select column type</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Editable</label>
+          <div class="mx-sm-3 mb-2">
+            <select class="form-control" ngModel name="editable" editable #editable="ngModel" required>
+              <option value="">Select Editable</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <span class="errorMsg" *ngIf="!editable.valid && editable.touched">Select editable option</span>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="!fr.valid" class="btn btn-success">Submit</button>&nbsp;
+        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modalRef.hide()">Cancel</button>
+
+      </form>
+    </div>
+  </ng-template>
+
+  <app-footer></app-footer>
+
+  <router-outlet></router-outlet>

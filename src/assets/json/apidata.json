@@ -1,0 +1,26 @@
+[
+    {
+        "id": "1",
+        "columnName": "column 1",
+        "columnType": "string",
+        "editable": "yes"
+    },
+    {
+        "id": "2",
+        "columnName": "column 2",
+        "columnType": "number",
+        "editable": "no"
+    },
+    {
+        "id": "3",
+        "columnName": "column 3",
+        "columnType": "date",
+        "editable": "yes"
+    },
+    {
+        "id": "4",
+        "columnName": "column 4",
+        "columnType": "boolean",
+        "editable": "yes"
+    }
+]

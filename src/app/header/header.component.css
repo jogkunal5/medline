@@ -1,0 +1,23 @@
+div.nav-scroller{
+    border:1px solid #ccc;
+}
+
+nav{
+    justify-content: center;
+    padding: 0px;
+}
+
+nav a {
+    border-right: 1px solid #ccc;
+    padding: 10px 30px;
+}
+
+/* div.nav-scroller > nav:last-child > a { border-right: none; } */
+
+img{
+    vertical-align: unset;
+}
+
+.logo2{
+    margin-left: 10px;
+}

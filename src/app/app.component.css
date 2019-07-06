@@ -1,0 +1,42 @@
+.col-master-section{
+    margin-top: 20px;
+}
+
+.col-master-section .card{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.errorMsg{
+    color: red;    
+}
+
+.sprite {
+    vertical-align: middle;
+    background: url("../assets/images/exercise-image-sprites.png") no-repeat;
+}
+.addIcon {
+    width: 17px;
+    height: 17px;
+    display: inline-block; 
+    background-position: 0px 0px;
+}
+
+.deleteIcon{
+    width: 17px;
+    height: 16px;
+    display: inline-block; 
+    background-position: -16px 0px;
+}
+
+.btn-primary, .btn-danger{
+    background: #eee;
+    color: #000;
+    border: 1px solid #ddd;
+}
+
+.card-body{
+    padding:0px;
+    padding-right: 25px;
+    padding-bottom: 10px;    
+}
