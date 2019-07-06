@@ -13,12 +13,9 @@ export class ColumnService {
 
   constructor(private httpClient: HttpClient) { }
 
+  // getting data from json file
   public getDataFromApi(): Observable<any> {
     return this.httpClient.get(this.api);
-  }
-
-  public addColumnData(form) {
-    
   }
 
 }

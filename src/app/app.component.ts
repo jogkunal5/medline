@@ -27,10 +27,12 @@ export class AppComponent implements OnInit {
     });
   }
 
+  // Open modal popup on click of add button
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
+  // To add column
   addColumn(form: NgForm) {
     let id = this.columnData.length + 1;
     form.value.id = id.toString();
@@ -38,6 +40,7 @@ export class AppComponent implements OnInit {
     this.hideModalBox();
   }
 
+  // To select all checboxes on click of main checkbox
   selectAll(event) {
     let checkbox = this.elRef.nativeElement.querySelectorAll('.chkbx');
     checkbox.forEach((ele) => {
@@ -51,6 +54,7 @@ export class AppComponent implements OnInit {
     });
   }
 
+  // select and push selected rows
   selectColumnIds(id, event) {
     if (event.currentTarget.checked) {
       this.selectedIds.push(id);
@@ -60,6 +64,7 @@ export class AppComponent implements OnInit {
     this.removeCheckMark();
   }
 
+  // To delete column data based on selection
   deleteColumn() {
     this.selectedIds.forEach((id) => {
       this.columnData = this.columnData.filter(item => item.id != id);
@@ -67,10 +72,12 @@ export class AppComponent implements OnInit {
     this.removeCheckMark();
   }
 
+  // Method to hide modal
   hideModalBox() {
     this.modalRef.hide();
   }
 
+  // To remove selection of main checkbox
   removeCheckMark() {
     let checkAll = this.elRef.nativeElement.querySelector('.checkAll');
     checkAll.checked = false;
